@@ -7,15 +7,16 @@ const userRegisterService = async (userObj) => {
 
         if (res.status === 201) {
             return {
-                status: res?.status,
-                message: res?.data.message,
+                status: res.status,
+                message: res.data.message,
+                data: res.data.data
             };
         }
 
         return {
-            status: res?.status,
-            message: res?.data.message,
-            data: res?.data.data,
+            status: res.status,
+            message: res.data.message,
+            data: res.data.data,
         };
 
     } catch (error) {
@@ -120,7 +121,8 @@ const updateUserDetailsService = async (
         };
     }
 };
-//Become Supplier Service
+
+//Become Service
 const upgradeUserService = async (
     userId,
     userObj
@@ -153,135 +155,95 @@ const upgradeUserService = async (
     }
 };
 
-// // //Change Password Service
-// // const changePasswordService = async (
-// //     userId,
-// //     oldPassword,
-// //     newPassword
-// // ) => {
-// //     const res = await userDataAccess.changePassword(
-// //         userId,
-// //         oldPassword,
-// //         newPassword
-// //     );
+//Change Password Service
+const changePasswordService = async (
+    userId,
+    oldPassword,
+    newPassword
+) => {
+    const res = await userDataAccess.changePassword(
+        userId,
+        oldPassword,
+        newPassword
+    );
 
-// //     if (!res) {
-// //         return {
-// //             status: 404,
-// //             error: "User not found",
-// //         };
-// //     }
+    if (!res) {
+        return {
+            status: 404,
+            error: "User not found",
+        };
+    }
 
-// //     if (res.status === 400) {
-// //         return {
-// //             status: 400,
-// //             message: res?.data.message,
-// //         };
-// //     }
+    if (res.status === 400) {
+        return {
+            status: 400,
+            message: res?.data.message,
+        };
+    }
 
-// //     if (res.status === 200) {
-// //         return {
-// //             status: 200,
-// //             message: res?.data.message,
-// //         };
-// //     }
-// // };
+    if (res.status === 200) {
+        return {
+            status: 200,
+            message: res?.data.message,
+        };
+    }
+};
 
-// // //Delete User Service
-// // const deleteUserService = async (userId) => {
-// //     const res = await userDataAccess.deleteUser(userId);
-// //     if (!res || res.status !== 200) {
-// //         return {
-// //             status: 400,
-// //             message: "Error deleting user",
-// //         };
-// //     }
+//Delete User Service
+const deleteUserService = async (userId) => {
+    const res = await userDataAccess.deleteUser(userId);
+    if (!res || res.status !== 200) {
+        return {
+            status: 400,
+            message: "Error deleting user",
+        };
+    }
 
-// //     if (res.status === 200) {
-// //         return {
-// //             status: 200,
-// //             data: {
-// //                 message: res?.data.message,
-// //             },
-// //         };
-// //     }
-// // };
+    if (res.status === 200) {
+        return {
+            status: 200,
+            message: res?.data.message,
+        };
+    }
+};
 
-// // //Get User By Id Service
-// // const getUserByIdService = async (userId) => {
-// //     try {
-// //         const res = await userDataAccess.getUserById(userId);
-// //         if (!res) {
-// //             return {
-// //                 status: 400,
-// //                 error: {
-// //                     message: "Error getting user",
-// //                 },
-// //             };
-// //         }
-// //         if (res) {
-// //             return {
-// //                 status: 200,
-// //                 message: "User fetched successfully",
-// //                 data: res,
-// //             };
-// //         }
-// //     } catch (error) {
-// //         return {
-// //             status: 400,
-// //             data: {
-// //                 message: "Error getting user",
-// //             },
-// //         };
-// //     }
-// // };
+//Get User By Id Service
+const getUserByIdService = async (userId) => {
+    try {
+        const res = await userDataAccess.getUserById(userId);
+        if (!res) {
+            return {
+                status: 400,
+                error: {
+                    message: "Error getting user",
+                },
+            };
+        }
+        if (res) {
+            return {
+                status: 200,
+                message: "User fetched successfully",
+                data: res,
+            };
+        }
+    } catch (error) {
+        return {
+            status: 400,
+            data: {
+                message: "Error getting user",
+            },
+        };
+    }
+};
 
-// // //Add Address Service
-// // const addAddressService = async (
-// //     userId,
-// //     addressObj
-// // ) => {
-// //     const res = await userDataAccess.addAddress(userId, addressObj);
-// //     if (!res) {
-// //         return {
-// //             status: 400,
-// //             error: "Error adding address",
-// //         };
-// //     }
 
-// //     if (res.status === 200) {
-// //         return {
-// //             status: 200,
-// //             message: res.message,
-// //             data: res.data,
-// //         };
-// //     }
-// // };
-
-// // //Update Address Service
-// // const updateAddressService = async (
-// //     userId,
-// //     addressObj
-// // ) => {
-// //     const res = await userDataAccess.updateAddress(userId, addressObj);
-// //     if (!res) {
-// //         return {
-// //             status: 400,
-// //             error: "Error updating address",
-// //         };
-// //     }
-
-// //     if (res.status === 200) {
-// //         return {
-// //             status: 200,
-// //             message: res.message,
-// //             data: res.data,
-// //         };
-// //     }
-// // };
 
 module.exports = {
     userRegisterService,
     userLoginService,
-    updateUserDetailsService
+    updateUserDetailsService,
+    changePasswordService,
+    deleteUserService,
+    upgradeUserService,
+    getUserByIdService
 };

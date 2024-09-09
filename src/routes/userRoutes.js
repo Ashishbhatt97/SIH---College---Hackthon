@@ -5,21 +5,12 @@ const { jwtAuth } = require("../middleware/jwtAuthentication.js");
 const router = express.Router();
 
 // user routes
-router.post(
-    "/register",
-    userController.userRegister
-);
-
-router.post(
-    "/login",
-    userController.userLogin
-);
-
-router.put(
-    "/update",
-    jwtAuth,
-    userController.updateUserDetails
-);
+router.route("/register").post(userController.userRegister);
+router.route("/login").post(userController.userLogin);
+router.route("/update").put(jwtAuth, userController.updateUserDetails);
+router.route("/upgradeUser").put(jwtAuth, userController.upgradeUser);
+router.route("/changepassword").put(jwtAuth, userController.changePassword);
+router.route("/getdetails").get(jwtAuth, userController.getUserById);
 
 module.exports = router;
 

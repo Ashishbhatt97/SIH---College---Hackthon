@@ -19,4 +19,4 @@ const convertBigIntToString = (obj) => {
     return obj;
 };
 
-module.exports = convertBigIntToString;
+module.exports = { convertBigIntToString };

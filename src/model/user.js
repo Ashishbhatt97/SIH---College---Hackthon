@@ -25,11 +25,6 @@ const loginSchema = z.object({
 // Update Schema
 const updateUserSchema = z.object({
     name: z.string().min(1, "Name is required").optional(),
-    phoneNumber: z
-        .string()
-        .length(10, "Phone number must be exactly 10 digits")
-        .regex(/^\d+$/, "Phone number must contain only digits")
-        .optional(),
 });
 
 module.exports = {
